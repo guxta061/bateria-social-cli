@@ -1,0 +1,22 @@
+[
+    {
+        "data_hora": "2026-04-12 13:06:25",
+        "nivel": 6,
+        "notas": "Cansado"
+    },
+    {
+        "data_hora": "2026-04-12 13:06:42",
+        "nivel": 6,
+        "notas": "feliz"
+    },
+    {
+        "data_hora": "2026-04-12 13:06:51",
+        "nivel": 10,
+        "notas": "mal"
+    },
+    {
+        "data_hora": "2026-04-12 13:07:04",
+        "nivel": 1,
+        "notas": "..."
+    }
+]
