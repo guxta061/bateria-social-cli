@@ -1,5 +1,6 @@
 import json
 import os
+import urllib.request
 from datetime import datetime
 
 DB_FILE = 'bateria_social.json'
@@ -10,13 +11,23 @@ class MonitorBateria:
         self._inicializar_banco()
 
     def _inicializar_banco(self):
-        """Cria o arquivo JSON se ele não existir."""
         if not os.path.exists(self.db_file):
             with open(self.db_file, 'w') as f:
                 json.dump([], f)
 
+    def buscar_conselho_externo(self):
+        """Consome a API pública Advice Slip para obter um conselho externo."""
+        url = "https://api.adviceslip.com/advice"
+        try:
+            with urllib.request.urlopen(url, timeout=4) as response:
+                if response.status == 200:
+                    data = json.loads(response.read().decode())
+                    return data["slip"]["advice"]
+        except Exception:
+            return "Respire fundo e respeite os limites da sua bateria social."
+        return "Tire um tempo para você descansar."
+
     def registrar_nivel(self, nivel, notas=""):
-        """Registra o nível atual e salva no JSON."""
         if not isinstance(nivel, int) or not (1 <= nivel <= 10):
             raise ValueError("O nível deve ser um número inteiro entre 1 e 10.")
         
@@ -37,18 +48,16 @@ class MonitorBateria:
         return registro
 
     def sugerir_acao(self, nivel):
-        """Retorna uma sugestão baseada no nível de energia."""
         if nivel <= 3:
-            return "Alerta: Bateria baixa! Sugestão: Foque em tarefas isoladas e adie reuniões não urgentes."
+            return "Alerta: Bateria baixa! Sugestão: Foque em tarefas isoladas."
         elif nivel <= 7:
-            return "Bateria estável. Interações moderadas são bem-vindas, mas respeite seus limites."
+            return "Bateria estável. Interações moderadas são bem-vindas."
         else:
-            return "Bateria alta! Ótimo momento para networking, colaboração e tarefas em equipe."
+            return "Bateria alta! Ótimo momento para networking e colaboração."
 
 def main():
     monitor = MonitorBateria()
     print("=== Monitor de Bateria Social ===")
-    print("Bem-vindo! Vamos mapear sua energia social hoje.\n")
     
     try:
         entrada = input("Qual seu nível de bateria social agora (1 a 10)? ")
@@ -60,11 +69,12 @@ def main():
         print("\n✅ Registro salvo com sucesso!")
         print(f"💡 Dica do sistema: {monitor.sugerir_acao(nivel)}")
         
+        print("\n🌐 Buscando pílula de sabedoria da internet...")
+        conselho = monitor.buscar_conselho_externo()
+        print(f"✨ Conselho do dia (API): {conselho}")
+        
     except ValueError as e:
-        if "invalid literal" in str(e):
-             print("❌ Erro: Por favor, digite apenas números inteiros.")
-        else:
-             print(f"❌ Erro: {e}")
+        print(f"❌ Erro: {e}")
 
 if __name__ == "__main__":
     main()

@@ -30,3 +30,8 @@ def test_registro_entrada_invalida(monitor):
 def test_sugestao_caso_limite(monitor):
     assert "Bateria baixa" in monitor.sugerir_acao(3)
     assert "Bateria estável" in monitor.sugerir_acao(4)
+
+def test_integracao_api_conselho(monitor):
+    conselho = monitor.buscar_conselho_externo()
+    assert isinstance(conselho, str)
+    assert len(conselho) > 0
