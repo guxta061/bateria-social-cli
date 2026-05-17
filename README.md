@@ -1,7 +1,8 @@
 # 🔋 Monitor de Bateria Social (CLI)
 
 [![CI Bateria Social](https://github.com/guxta061/bateria-social-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/guxta061/bateria-social-cli/actions/workflows/ci.yml)
-
+> 🚀 **Deploy / Publicação Oficial:** [Aceder à Release v1.1.0](https://github.com/guxta061/bateria-social-cli/releases/tag/v1.1.0)
+> 
 ## 📌 O Problema 
 Muitas pessoas, especialmente estudantes, trabalhadores em rotinas intensas e indivíduos neurodivergentes, enfrentam dificuldades para gerenciar sua energia social diária. A falta de monitoramento pode levar à sobrecarga mental, esgotamento (burnout) e perda de produtividade.
 
