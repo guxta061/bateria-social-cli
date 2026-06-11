@@ -1,22 +1,23 @@
-import json
 import os
 import urllib.request
+import json
 from datetime import datetime
+from dotenv import load_dotenv
+from supabase import create_client
 
-DB_FILE = 'bateria_social.json'
+load_dotenv()
+def _get_supabase():
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_KEY")
+    if not url or not key:
+        raise EnvironmentError("SUPABASE_URL e SUPABASE_KEY devem estar definidos.")
+    return create_client(url, key)
 
 class MonitorBateria:
-    def __init__(self, db_file=DB_FILE):
-        self.db_file = db_file
-        self._inicializar_banco()
-
-    def _inicializar_banco(self):
-        if not os.path.exists(self.db_file):
-            with open(self.db_file, 'w') as f:
-                json.dump([], f)
+    def __init__(self, db_file=None):
+        self.supabase = _get_supabase()
 
     def buscar_conselho_externo(self):
-        """Consome a API pública Advice Slip para obter um conselho externo."""
         url = "https://api.adviceslip.com/advice"
         try:
             with urllib.request.urlopen(url, timeout=4) as response:
@@ -30,21 +31,14 @@ class MonitorBateria:
     def registrar_nivel(self, nivel, notas=""):
         if not isinstance(nivel, int) or not (1 <= nivel <= 10):
             raise ValueError("O nível deve ser um número inteiro entre 1 e 10.")
-        
+
         registro = {
             "data_hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "nivel": nivel,
             "notas": notas
         }
-        
-        with open(self.db_file, 'r') as f:
-            dados = json.load(f)
-            
-        dados.append(registro)
-        
-        with open(self.db_file, 'w') as f:
-            json.dump(dados, f, indent=4)
-        
+
+        self.supabase.table("registros").insert(registro).execute()
         return registro
 
     def sugerir_acao(self, nivel):
@@ -58,21 +52,16 @@ class MonitorBateria:
 def main():
     monitor = MonitorBateria()
     print("=== Monitor de Bateria Social ===")
-    
     try:
         entrada = input("Qual seu nível de bateria social agora (1 a 10)? ")
         nivel = int(entrada)
         notas = input("Alguma nota sobre como se sente? (Opcional): ")
-        
         monitor.registrar_nivel(nivel, notas)
-        
         print("\n✅ Registro salvo com sucesso!")
         print(f"💡 Dica do sistema: {monitor.sugerir_acao(nivel)}")
-        
         print("\n🌐 Buscando pílula de sabedoria da internet...")
         conselho = monitor.buscar_conselho_externo()
         print(f"✨ Conselho do dia (API): {conselho}")
-        
     except ValueError as e:
         print(f"❌ Erro: {e}")
 
