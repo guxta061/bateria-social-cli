@@ -31,7 +31,6 @@ class MonitorBateria:
     def registrar_nivel(self, nivel, notas=""):
         if not isinstance(nivel, int) or not (1 <= nivel <= 10):
             raise ValueError("O nível deve ser um número inteiro entre 1 e 10.")
-
         registro = {
             "data_hora": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "nivel": nivel,
