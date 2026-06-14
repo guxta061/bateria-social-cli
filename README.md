@@ -2,8 +2,14 @@
 
 [![CI Bateria Social](https://github.com/guxta061/bateria-social-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/guxta061/bateria-social-cli/actions/workflows/ci.yml)
 > 🚀 **Deploy / Publicação Oficial:** [Aceder à Release v1.1.0](https://github.com/guxta061/bateria-social-cli/releases/tag/v1.1.0)
-> 
-## 📌 O Problema 
+
+## 👤 Integrante
+
+| Nome | RA |
+|------|----|
+| Gustavo Henrique Vieira dos Santos | 22504468 |
+
+## 📌 O Problema
 Muitas pessoas, especialmente estudantes, trabalhadores em rotinas intensas e indivíduos neurodivergentes, enfrentam dificuldades para gerenciar sua energia social diária. A falta de monitoramento pode levar à sobrecarga mental, esgotamento (burnout) e perda de produtividade.
 
 ## 💡 A Solução
@@ -13,7 +19,7 @@ Uma aplicação simples de Linha de Comando (CLI) que atua como um "Monitor de B
 
 ## 🛠️ Tecnologias Utilizadas
 * **Linguagem:** Python 3
-* **Armazenamento:** JSON (Local)
+* **Banco de Dados:** Supabase (PostgreSQL na nuvem)
 * **Testes:** Pytest
 * **Linting:** Ruff
 * **CI/CD:** GitHub Actions
@@ -21,6 +27,14 @@ Uma aplicação simples de Linha de Comando (CLI) que atua como um "Monitor de B
 ## 🚀 Instruções de Instalação e Execução
 
 1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/guxta061/bateria-social-cli.git](https://github.com/guxta061/bateria-social-cli.git)
+```bash
+   git clone https://github.com/guxta061/bateria-social-cli.git
    cd bateria-social-cli
+```
+
+2. **Instale as dependências:**
+```bash
+   pip install -r requirements.txt
+```
+
+3. **Crie o arquivo `.env` na raiz do projeto:**
