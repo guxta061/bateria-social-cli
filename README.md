@@ -38,3 +38,17 @@ Uma aplicação simples de Linha de Comando (CLI) que atua como um "Monitor de B
 ```
 
 3. **Crie o arquivo `.env` na raiz do projeto:**
+```
+   SUPABASE_URL=https://seu-projeto.supabase.co
+   SUPABASE_KEY=sua-chave-aqui
+```
+
+4. **Rode a aplicação:**
+```bash
+   python src/app.py
+```
+
+5. **Rode os testes:**
+```bash
+   pytest
+```
