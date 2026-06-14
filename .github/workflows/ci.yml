@@ -25,9 +25,10 @@ jobs:
         pip install -r requirements.txt
 
     - name: Rodar Linting (Ruff)
-      run: |
-        ruff check src tests
+      run: ruff check src tests
 
     - name: Rodar Testes (Pytest)
-      run: |
-        pytest
+      run: pytest
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
